@@ -16,3 +16,18 @@ spec:
       containers:
         - name: jenkins
           image: jenkins/jenkins:latest
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-lb
+spec:
+  type: LoadBalancer
+  selector:
+    my-pod: my-jenkins
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
