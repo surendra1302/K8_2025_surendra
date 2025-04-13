@@ -1,0 +1,76 @@
+#FIle:ext_service.yml 
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: google-service
+spec:
+  type: ExternalName
+  externalName: google.com 
+  
+#File: jenkins-extip.yml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-ext-ip
+spec:
+  selector:
+    my-pod: my-jenkins
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8082
+      targetPort: 8080
+  externalIPs:
+    - 172.31.12.83
+
+#File: jenkins-loadbalancer.yml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-loadbalancer
+spec:
+  type: LoadBalancer
+  selector:
+    my-pod: my-jenkins
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+	  
+#File: jenkins-service.yml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    my-pod: my-jenkins
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+#File: jenkins-svc-nodeport.yml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-nodeport
+spec:
+  type: NodePort
+  selector:
+    my-pod: my-jenkins
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30008
+
+#Commands:
+kubectl apply -f jenkins-loadbalancer.yml 
+kubectl get svc
+kubectl get nodes
+kubectl get nodes -o wide
+kubectl version
+kubectl exec -it jenkins /bin/bash
+curl -v http://10.244.255.66:8080
