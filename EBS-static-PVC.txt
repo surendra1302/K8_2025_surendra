@@ -5,6 +5,11 @@ EBS as PV -static:
 3. copy volume id
 
 4.go to volume > actions > attach volume > select ec2 > attach
+5. run below commands on worker node which u attached EBS:
+#sudo mkfs.ext4 /dev/xvdf
+#sudo mkdir -p /mnt/ebs
+#sudo mount /dev/xvdf /mnt/ebs
+#sudo chmod 777 /mnt/ebs
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
 
 pv.yaml:
