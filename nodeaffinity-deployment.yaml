@@ -64,9 +64,10 @@ spec:
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
+          - weight: 5
+            preference:
+              matchExpressions:
               - key: pet
                 operator: In
-                values:
+                values: 
                 - monkey
