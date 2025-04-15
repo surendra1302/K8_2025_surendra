@@ -1,0 +1,24 @@
+cmd to create configmap:
+kubectl create cm myconfig --from-file=file1.txt --from-file=file2.txt
+cmd tocheck data in cm:
+kubectl get cm cmname -oyaml
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+configmap-pod.yaml:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-configmap
+spec:
+  containers:
+    - name: demo
+      image: alpine
+      command: ["sleep", "3600"]
+      volumeMounts:
+      - name: config
+        mountPath: "/config"
+        readOnly: true
+  volumes:
+  - name: config
+    configMap:
+      name: my-config1
