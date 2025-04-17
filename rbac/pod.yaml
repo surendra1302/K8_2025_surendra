@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-reader-pod
+  namespace: dev
+spec:
+  serviceAccountName: secrets-reader
+  containers:
+  - name: secret-reader
+    image: <your-repo>/get-secrets:latest
+    imagePullPolicy: Always
